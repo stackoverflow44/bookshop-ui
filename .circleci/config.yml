@@ -1,23 +1,80 @@
-version: '2.1'
-orbs:
-  terraform: circleci/terraform@dev:alpha
+docker_image: &docker_image
+  working_directory: ~/bookshop-ui
+  docker:
+  - image: circleci/node@4.1.0
+
+restore_cache:
+- &restore_cache
+  restore_cache:
+    keys:
+    - v1-dependencies-{{ checksum "package.json" }}
+    # fallback to using the latest cache if no exact match is found
+    - v1-dependencies-
+
+deploy: &deploy 
+  docker:
+    - image: google/cloud-sdk
+  steps:
+    - checkout
+    - attach_workspace:
+        at: .
+    - run:
+        name: Authenticate service account
+        command: |
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+    - run: 
+        name: 'Change service to deploy'
+        command: sed 's/qa/'$GOOGLE_SERVICE'/g' app-example.yaml > app.yaml && cat app.yaml
+    - run: 
+        name: 'Deploy app'
+        command: gcloud app deploy
+
+build: &build
+  <<: *docker_image
+  steps:
+    - checkout
+    - *restore_cache
+    - run: npm run build
+    - persist_to_workspace:
+        root: .
+        paths: dist
+
+version: 2
 jobs:
-  plan-apply:
-    working_directory: /tmp/project
-    docker:
-      - image: hashicorp/terraform:light
+  install_dependencies:
+    <<: *docker_image
     steps:
-      - checkout
-      - run:
-          name: terraform init & plan
-          command: |
-            terraform init -input=false
-            terraform plan 
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
+    - checkout
+    - run: npm install
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+  run_unit_tests:
+    <<: *docker_image
+    steps:
+    - checkout
+    - *restore_cache
+    - run: npm run test
+
+  build-prod:
+    <<: *build
+
+  deploy-prod:
+    <<: *deploy
+  
 workflows:
-  plan-apply:
+  version: 2
+  continuos_integration:
     jobs:
-      - plan-apply
+      - install_dependencies
+      - run_unit_tests:
+          requires:
+          - install_dependencies
+      - build-prod:
+          requires:
+            - install_dependencies
+          context: bookshop-ui
+  
