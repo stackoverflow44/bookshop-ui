@@ -10,6 +10,12 @@ terraform {
   required_version = ">= 0.12.26"
 }
 
+provider "google" {
+ credentials = "${file("CREDENTIALS_FILE.json")}"
+ project     = "bookstore-api-303014"
+ region      = "asia-southeastasia-1a"
+}
+
 # ------------------------------------------------------------------------------
 # PREPARE LOCALS
 #
@@ -150,8 +156,4 @@ resource "google_dns_record_set" "cname" {
   rrdatas      = ["c.storage.googleapis.com."]
 }
 
-provider "google" {
- credentials = "${file("CREDENTIALS_FILE.json")}"
- project     = "bookstore-api-303014"
- region      = "asia-southeastasia-1a"
-}
+
