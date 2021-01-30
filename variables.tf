@@ -6,13 +6,13 @@
 variable "project" {
   description = "The project ID to host the site in."
   type        = string
-  value = $GCLOUD_PROJECT_ID
+  
 }
 
 variable "website_domain_name" {
   description = "The name of the website and the Cloud Storage bucket to create (e.g. static.foo.com)."
   type        = string
-  value = "bookshop-ui"
+ 
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
