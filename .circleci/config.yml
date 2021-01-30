@@ -35,7 +35,6 @@ deploy: &deploy
           gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
     - run: 
         name: 'Change service to deploy'
-        command: sh ./app-example.yaml > ./app.yaml && cat ./app.yaml
     - run: 
         name: 'Deploy app'
         command: gcloud app deploy
