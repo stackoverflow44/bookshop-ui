@@ -8,8 +8,7 @@ jobs:
       - checkout
       - terraform/init:
           path: .
-          command:
-             terraform init -input=false -var="GCLOUD_PROJECT_ID=$GCLOUD_PROJECT_ID" -var="website_domain_name=bookshop-ui"      
+          var: "GCLOUD_PROJECT_ID=$GCLOUD_PROJECT_ID, website_domain_name=bookshop-ui"      
       - terraform/validate:
           path: .
       - terraform/fmt:
