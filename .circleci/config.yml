@@ -90,7 +90,7 @@ workflows:
     jobs:
       - precommit:
           context:
-            - bookshop
+            - bookshop-ui
           filters:
             tags:
               only: /^v.*/
