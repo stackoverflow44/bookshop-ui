@@ -8,13 +8,13 @@ jobs:
       - checkout
       - terraform/init:
           path: .   
-          var:
       - terraform/validate:
           path: .
       - terraform/fmt:
           path: .
       - terraform/plan:
           path: .
+          var: "GCLOUD_PROJECT_ID=$GCLOUD_PROJECT_ID, website_domain_name=bookshop-ui"
       - terraform/apply:
           path: .
       - terraform/destroy:
