@@ -78,5 +78,5 @@ workflows:
             - install_dependencies
           context: bookshop-ui
       - deploy-prod:
-        context: bookshop-ui
+          context: bookshop-ui
   
