@@ -1,7 +1,7 @@
 docker_image: &docker_image
   working_directory: ~/bookshop-ui
   docker:
-  - image: circleci/node@4.1.0
+  - image: circleci/node@@3.0.0
 
 restore_cache:
 - &restore_cache
