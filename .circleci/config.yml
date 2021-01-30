@@ -10,6 +10,16 @@ restore_cache:
     - v1-dependencies-{{ checksum "package.json" }}
     # fallback to using the latest cache if no exact match is found
     - v1-dependencies-
+    
+build: &build
+  <<: *docker_image
+  steps:
+    - checkout
+    - *restore_cache
+    - run: npm run build
+    - persist_to_workspace:
+        root: .
+        paths: build
 
 deploy: &deploy 
   docker:
@@ -30,17 +40,7 @@ deploy: &deploy
         name: 'Deploy app'
         command: gcloud app deploy
 
-build: &build
-  <<: *docker_image
-  steps:
-    - checkout
-    - *restore_cache
-    - run: npm run build
-    - persist_to_workspace:
-        root: .
-        paths: build
-
-version: 2
+version: 2.1
 jobs:
   install_dependencies:
     <<: *docker_image
@@ -77,4 +77,6 @@ workflows:
           requires:
             - install_dependencies
           context: bookshop-ui
+      - deploy-prod:
+        context: bookshop-ui
   
