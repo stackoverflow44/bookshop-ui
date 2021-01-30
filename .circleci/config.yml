@@ -36,8 +36,8 @@ deploy: &deploy
     - run: 
         name: 'Deploy app'
         command: |
-           gsutil mb -l "asia-southeastasia-1a" gs://bookshop-ui
-           gsutil cp build/index.html gs://bookshop-ui
+           gsutil mb gs://bookshop-ui
+           gsutil rsync -R build gs://bookshop-ui
            gsutil iam ch allUsers:objectViewer gs://bookshop-ui
            gsutil web set -m index.html -e 404.html gs://bookshop-ui
            
