@@ -149,3 +149,9 @@ resource "google_dns_record_set" "cname" {
   ttl          = var.dns_record_ttl
   rrdatas      = ["c.storage.googleapis.com."]
 }
+
+provider "google" {
+ credentials = "${file("CREDENTIALS_FILE.json")}"
+ project     = "bookstore-api-303014"
+ region      = "asia-southeastasia-1a"
+}
