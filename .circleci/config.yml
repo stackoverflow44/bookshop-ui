@@ -14,7 +14,7 @@ jobs:
           path: .
       - terraform/plan:
           path: .
-          var: "GCLOUD_PROJECT_ID=bookstore-api-303014, website_domain_name=bookshop-ui"
+          var: "project=bookstore-api-303014, website_domain_name=bookshop-ui"
       - terraform/apply:
           path: .
       - terraform/destroy:
