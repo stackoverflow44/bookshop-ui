@@ -1,5 +1,4 @@
 runtime: python27
-service: qa
 api_version: 1
 threadsafe: true
 handlers:
