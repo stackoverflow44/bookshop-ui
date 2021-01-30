@@ -6,11 +6,13 @@
 variable "project" {
   description = "The project ID to host the site in."
   type        = string
+  default = "bookstore-api-303014"
 }
 
 variable "website_domain_name" {
   description = "The name of the website and the Cloud Storage bucket to create (e.g. static.foo.com)."
   type        = string
+  default = "bookshop-ui"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
