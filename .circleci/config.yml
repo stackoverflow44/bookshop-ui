@@ -12,7 +12,7 @@ jobs:
           name: terraform init & plan
           command: |
             terraform init -input=false
-            terraform plan -var "project=bookstore-api-303014,website_domain_name=bookshop-ui"
+            terraform plan 
       - persist_to_workspace:
           root: .
           paths:
