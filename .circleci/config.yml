@@ -35,8 +35,11 @@ deploy: &deploy
           gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
     - run: 
         name: 'Deploy app'
-        command: gcloud app deploy
-
+        command: |
+           gsutil cp build/index.html gs://bookshop-ui
+           gsutil iam ch allUsers:objectViewer gs://bookshop-ui
+           gsutil web set -m index.html -e 404.html gs://bookshop-ui
+           
 version: 2.1
 jobs:
   install_dependencies:
