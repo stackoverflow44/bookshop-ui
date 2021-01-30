@@ -12,7 +12,7 @@ jobs:
           name: terraform init & plan
           command: |
             terraform init -input=false
-            terraform plan -out -var "project=${GCLOUD_PROJECT_ID},website_domain_url=bookshop-ui"
+            terraform plan -var "project=bookstore-api-303014,website_domain_url=bookshop-ui"
       - persist_to_workspace:
           root: .
           paths:
