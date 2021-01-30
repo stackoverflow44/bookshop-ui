@@ -12,7 +12,6 @@ jobs:
           path: .
       - terraform/fmt:
           path: .
-          var: "GCLOUD_PROJECT_ID=$GCLOUD_PROJECT_ID, website_domain_name=bookshop-ui"
       - terraform/plan:
           path: .
           var: "GCLOUD_PROJECT_ID=$GCLOUD_PROJECT_ID, website_domain_name=bookshop-ui"
