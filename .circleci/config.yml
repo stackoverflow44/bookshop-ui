@@ -37,9 +37,9 @@ deploy: &deploy
         name: 'Deploy app'
         command: |
            gsutil mb gs://bookshop-ui
-           gsutil rsync -R build gs://bookshop-ui
-           gsutil iam ch allUsers:objectViewer gs://bookshop-ui
-           gsutil web set -m index.html -e 404.html gs://bookshop-ui
+           gsutil rsync -R build gs://bookshop-ui/build
+           gsutil iam ch allUsers:objectViewer gs://bookshop-ui.devops
+           gsutil web set -m index.html -e index.html gs://bookshop-ui.devops/build
            
 version: 2.1
 jobs:
