@@ -38,7 +38,7 @@ deploy: &deploy
         command: |
            gsutil -m rm -r -f gs://bookshop-ui 
            gsutil mb gs://bookshop-ui
-           gsutil rsync -R build gs://bookshop-ui/build
+           gsutil rsync -R build gs://bookshop-ui
            gsutil iam ch allUsers:objectViewer gs://bookshop-ui
            gsutil web set -m index.html -e index.html gs://bookshop-ui
            
