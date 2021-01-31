@@ -36,7 +36,7 @@ deploy: &deploy
     - run: 
         name: 'Deploy app'
         command: |
-           gsutil rm -r -f gs://bookshop-ui 
+           gsutil -m rm -r -f gs://bookshop-ui 
            gsutil mb gs://bookshop-ui
            gsutil rsync -R build gs://bookshop-ui/build
            gsutil iam ch allUsers:objectViewer gs://bookshop-ui
